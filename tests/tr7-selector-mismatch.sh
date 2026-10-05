@@ -43,11 +43,7 @@ render_conf() {
 }
 
 restart_and_attempt() {
-  ipsec stop 2>/dev/null || true
-  pkill -9 charon 2>/dev/null || true
-  rm -f /var/run/charon.pid /var/run/starter.charon.pid 2>/dev/null || true
-  sleep 1
-  ipsec start
+  systemctl restart strongswan-starter
   sleep 2
   set +e
   ipsec up "$CONN_NAME"

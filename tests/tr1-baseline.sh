@@ -35,7 +35,7 @@ done
 if command -v ipsec &>/dev/null && ipsec statusall 2>/dev/null | grep -q "ESTABLISHED"; then
   echo "WARNING: an IKE_SA is currently ESTABLISHED. TR-1 requires IPsec" >&2
   echo "         to be inactive. Run: sudo ipsec down cs6530-site-to-site" >&2
-  echo "         (or 'sudo ipsec stop') before continuing." >&2
+  echo "         (or 'sudo systemctl stop strongswan-starter') before continuing." >&2
   exit 1
 fi
 

@@ -51,7 +51,7 @@ if [[ "$MODE" == "break" ]]; then
   echo "[*] Wrote /etc/ipsec.conf with mismatched IKE proposal"
 
   ipsec down "$CONN_NAME" 2>/dev/null || true
-  ipsec restart
+  systemctl restart strongswan-starter
   sleep 2
 
   PCAP_FILE="$OUT_DIR/${TS}_${SITE_ARG}_tr4-ike-mismatch.pcap"
@@ -95,7 +95,7 @@ if [[ "$MODE" == "break" ]]; then
 elif [[ "$MODE" == "restore" ]]; then
   echo "[*] Restoring correct IKE proposal: $CORRECT_IKE"
   render_conf "$CORRECT_IKE"
-  ipsec restart
+  systemctl restart strongswan-starter
   sleep 2
 
   echo "[*] Bringing connection back up..."

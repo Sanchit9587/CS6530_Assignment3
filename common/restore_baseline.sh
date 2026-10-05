@@ -19,12 +19,8 @@ CONN_NAME="cs6530-site-to-site"
 echo "[*] Re-rendering ipsec.conf / ipsec.secrets from config/${SITE_ARG}.env (known-good values)"
 "$REPO_ROOT/render-config.sh" "$SITE_ARG"
 
-echo "[*] Hard-restarting strongSwan to clear any stuck state"
-ipsec stop 2>/dev/null || true
-pkill -9 charon 2>/dev/null || true
-rm -f /var/run/charon.pid /var/run/starter.charon.pid 2>/dev/null || true
-sleep 1
-ipsec start
+echo "[*] Restarting strongSwan via systemctl (avoids orphaned-process issues)"
+systemctl restart strongswan-starter
 sleep 2
 
 echo "[*] Bringing connection up"

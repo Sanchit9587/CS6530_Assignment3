@@ -11,8 +11,8 @@ set -euo pipefail
 
 CONN_NAME="cs6530-site-to-site"
 
-echo "[*] Restarting strongSwan (charon daemon)"
-ipsec restart
+echo "[*] Restarting strongSwan (via systemctl, avoids orphaned-process issues)"
+systemctl restart strongswan-starter
 sleep 2
 
 echo "[*] Bringing up connection: $CONN_NAME"
