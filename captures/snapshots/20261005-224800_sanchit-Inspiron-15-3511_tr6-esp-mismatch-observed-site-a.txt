@@ -1,0 +1,46 @@
+===== status_snapshot : tr6-esp-mismatch-observed-site-a =====
+Host    : sanchit-Inspiron-15-3511
+Time    : Mon Oct  5 10:48:00 PM IST 2026
+
+----- sudo ipsec statusall -----
+Status of IKE charon daemon (strongSwan 5.9.13, Linux 7.0.0-34-generic, x86_64):
+  uptime: 32 minutes, since Oct 05 22:15:14 2026
+  malloc: sbrk 2867200, mmap 0, used 1206064, free 1661136
+  worker threads: 11 of 16 idle, 5/0/0/0 working, job queue: 0/0/0/0, scheduled: 17
+  loaded plugins: charon aesni aes rc2 sha2 sha1 md5 mgf1 random nonce x509 revocation constraints pubkey pkcs1 pkcs7 pkcs12 pgp dnskey sshkey pem openssl pkcs8 fips-prf gmp agent xcbc hmac kdf gcm drbg attr kernel-netlink resolve socket-default connmark stroke updown eap-mschapv2 xauth-generic counters
+Listening IP addresses:
+  10.229.244.178
+  2401:4900:cadd:9b5:2004:2654:1cc:50e7
+  172.19.0.1
+  172.17.0.1
+  172.18.0.1
+  10.1.0.1
+Connections:
+cs6530-site-to-site:  10.229.244.178...10.229.244.9  IKEv2, dpddelay=30s
+cs6530-site-to-site:   local:  [10.229.244.178] uses pre-shared key authentication
+cs6530-site-to-site:   remote: [10.229.244.9] uses pre-shared key authentication
+cs6530-site-to-site:   child:  10.1.0.0/24 === 10.2.0.0/24 TUNNEL, dpdaction=start
+Security Associations (1 up, 0 connecting):
+cs6530-site-to-site[11]: ESTABLISHED 10 seconds ago, 10.229.244.178[10.229.244.178]...10.229.244.9[10.229.244.9]
+cs6530-site-to-site[11]: IKEv2 SPIs: cea9634ddb368f97_i d8f7ba0c42c4004f_r*, pre-shared key reauthentication in 2 hours
+cs6530-site-to-site[11]: IKE proposal: AES_CBC_256/HMAC_SHA2_256_128/PRF_HMAC_SHA2_256/MODP_2048
+
+----- sudo ip xfrm state -----
+
+----- sudo ip xfrm policy -----
+src 0.0.0.0/0 dst 0.0.0.0/0 
+	socket in priority 0 
+src 0.0.0.0/0 dst 0.0.0.0/0 
+	socket out priority 0 
+src 0.0.0.0/0 dst 0.0.0.0/0 
+	socket in priority 0 
+src 0.0.0.0/0 dst 0.0.0.0/0 
+	socket out priority 0 
+src ::/0 dst ::/0 
+	socket in priority 0 
+src ::/0 dst ::/0 
+	socket out priority 0 
+src ::/0 dst ::/0 
+	socket in priority 0 
+src ::/0 dst ::/0 
+	socket out priority 0 

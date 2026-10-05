@@ -1,0 +1,76 @@
+===== status_snapshot : tr2-protected-site-a =====
+Host    : sanchit-Inspiron-15-3511
+Time    : Mon Oct  5 11:14:35 PM IST 2026
+
+----- sudo ipsec statusall -----
+Status of IKE charon daemon (strongSwan 5.9.13, Linux 7.0.0-34-generic, x86_64):
+  uptime: 59 minutes, since Oct 05 22:15:14 2026
+  malloc: sbrk 2867200, mmap 0, used 1239984, free 1627216
+  worker threads: 11 of 16 idle, 5/0/0/0 working, job queue: 0/0/0/0, scheduled: 21
+  loaded plugins: charon aesni aes rc2 sha2 sha1 md5 mgf1 random nonce x509 revocation constraints pubkey pkcs1 pkcs7 pkcs12 pgp dnskey sshkey pem openssl pkcs8 fips-prf gmp agent xcbc hmac kdf gcm drbg attr kernel-netlink resolve socket-default connmark stroke updown eap-mschapv2 xauth-generic counters
+Listening IP addresses:
+  10.229.244.178
+  2401:4900:cacd:28d2:6dc2:96dd:17bf:b968
+  2401:4900:cadd:9b5:2004:2654:1cc:50e7
+  172.19.0.1
+  172.17.0.1
+  172.18.0.1
+  10.1.0.1
+Connections:
+cs6530-site-to-site:  10.229.244.178...10.229.244.9  IKEv2, dpddelay=30s
+cs6530-site-to-site:   local:  [10.229.244.178] uses pre-shared key authentication
+cs6530-site-to-site:   remote: [10.229.244.9] uses pre-shared key authentication
+cs6530-site-to-site:   child:  10.1.0.0/24 === 10.2.0.0/24 TUNNEL, dpdaction=start
+Security Associations (1 up, 0 connecting):
+cs6530-site-to-site[14]: ESTABLISHED 25 minutes ago, 10.229.244.178[10.229.244.178]...10.229.244.9[10.229.244.9]
+cs6530-site-to-site[14]: IKEv2 SPIs: 9212a5e673d28861_i 1939498176f76990_r*, pre-shared key reauthentication in 2 hours
+cs6530-site-to-site[14]: IKE proposal: AES_CBC_256/HMAC_SHA2_256_128/PRF_HMAC_SHA2_256/MODP_2048
+cs6530-site-to-site{10}:  INSTALLED, TUNNEL, reqid 1, ESP SPIs: c467a64a_i cb867ca9_o
+cs6530-site-to-site{10}:  AES_CBC_256/HMAC_SHA2_256_128, 1008 bytes_i (12 pkts, 1s ago), 1008 bytes_o (12 pkts, 2s ago), rekeying in 22 minutes
+cs6530-site-to-site{10}:   10.1.0.0/24 === 10.2.0.0/24
+
+----- sudo ip xfrm state -----
+src 10.229.244.178 dst 10.229.244.9
+	proto esp spi 0xcb867ca9 reqid 1 mode tunnel
+	replay-window 0 flag af-unspec
+	auth-trunc hmac(sha256) 0xfa3a16cd624ec4437ef4242fae455d34cfab65b9882ce3c75d76017a4cf6b8fa 128
+	enc cbc(aes) 0xd109723313045503a98b9f2a085b0a304a3e9bfb69a9cf7cf2964963614ac003
+	lastused 2026-10-05 23:14:33
+	anti-replay context: seq 0x0, oseq 0xc, bitmap 0x00000000
+src 10.229.244.9 dst 10.229.244.178
+	proto esp spi 0xc467a64a reqid 1 mode tunnel
+	replay-window 32 flag af-unspec
+	auth-trunc hmac(sha256) 0xac47d57351a2ff8cb231a4a53dc6f7c18c1a74dc807a480700262f2c66c5dcb8 128
+	enc cbc(aes) 0xe4af6cbe50d4001d88e9548f258cee3103b7c49156ad9d906d98b54fccc0846e
+	lastused 2026-10-05 23:14:34
+	anti-replay context: seq 0xc, oseq 0x0, bitmap 0x00000fff
+
+----- sudo ip xfrm policy -----
+src 10.1.0.0/24 dst 10.2.0.0/24 
+	dir out priority 375423 
+	tmpl src 10.229.244.178 dst 10.229.244.9
+		proto esp spi 0xcb867ca9 reqid 1 mode tunnel
+src 10.2.0.0/24 dst 10.1.0.0/24 
+	dir fwd priority 375423 
+	tmpl src 10.229.244.9 dst 10.229.244.178
+		proto esp reqid 1 mode tunnel
+src 10.2.0.0/24 dst 10.1.0.0/24 
+	dir in priority 375423 
+	tmpl src 10.229.244.9 dst 10.229.244.178
+		proto esp reqid 1 mode tunnel
+src 0.0.0.0/0 dst 0.0.0.0/0 
+	socket in priority 0 
+src 0.0.0.0/0 dst 0.0.0.0/0 
+	socket out priority 0 
+src 0.0.0.0/0 dst 0.0.0.0/0 
+	socket in priority 0 
+src 0.0.0.0/0 dst 0.0.0.0/0 
+	socket out priority 0 
+src ::/0 dst ::/0 
+	socket in priority 0 
+src ::/0 dst ::/0 
+	socket out priority 0 
+src ::/0 dst ::/0 
+	socket in priority 0 
+src ::/0 dst ::/0 
+	socket out priority 0 
