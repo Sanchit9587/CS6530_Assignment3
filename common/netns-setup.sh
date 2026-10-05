@@ -46,7 +46,7 @@ fi
 source "$ENV_FILE"
 
 # --- sanity: refuse to run with unfilled placeholders ---
-for var in MY_WAN_IP PEER_WAN_IP ROLL_NO_MINE ROLL_NO_PEER; do
+for var in MY_WAN_IP PEER_WAN_IP ROLL_NO_SITE_A ROLL_NO_SITE_B; do
   val="${!var}"
   if [[ "$val" == *XXX* || "$val" == *YYY* ]]; then
     echo "ERROR: $var in $ENV_FILE still looks like a placeholder ('$val')." >&2
