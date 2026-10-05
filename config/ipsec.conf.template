@@ -1,0 +1,26 @@
+# ipsec.conf — rendered by render-config.sh, do not edit by hand.
+# FR-3: traffic selectors = {{MY_SUBNET}} <=> {{PEER_SUBNET}}
+# FR-4: IKEv2, PSK auth, tunnel-mode CHILD_SA
+
+config setup
+    uniqueids=yes
+
+conn cs6530-site-to-site
+    keyexchange=ikev2
+    type=tunnel
+
+    left={{MY_WAN_IP}}
+    leftid={{MY_WAN_IP}}
+    leftsubnet={{MY_SUBNET}}
+    leftauth=psk
+
+    right={{PEER_WAN_IP}}
+    rightid={{PEER_WAN_IP}}
+    rightsubnet={{PEER_SUBNET}}
+    rightauth=psk
+
+    ike={{IKE_PROPOSAL}}
+    esp={{ESP_PROPOSAL}}
+
+    dpdaction=restart
+    auto=start
